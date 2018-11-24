@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 public class BookController : MonoBehaviour {
-
+    //teste para commit
     public Animator anim;
     public static BookController instance;
     
