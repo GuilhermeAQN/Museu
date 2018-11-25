@@ -44,8 +44,20 @@ TagManager:
   - name: Background
     uniqueID: 95937385
     locked: 0
-  - name: Walls
+  - name: 0Wall
     uniqueID: 2503654861
+    locked: 0
+  - name: Main
+    uniqueID: 3964151045
+    locked: 0
+  - name: 1Wall
+    uniqueID: 668224009
+    locked: 0
+  - name: 2Wall
+    uniqueID: 2412426129
+    locked: 0
+  - name: 3Wall
+    uniqueID: 4187865469
     locked: 0
   - name: HUD
     uniqueID: 2904289327

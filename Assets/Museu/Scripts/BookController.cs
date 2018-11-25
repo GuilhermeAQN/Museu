@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 public class BookController : MonoBehaviour {
-    //teste 
     public Animator anim;
     public static BookController instance;
     

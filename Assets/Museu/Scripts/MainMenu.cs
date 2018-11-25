@@ -12,6 +12,6 @@ public class MainMenu : MonoBehaviour {
 
     public void QuitGame()
     {
-        Input.backButtonLeavesApp = true;
+        Application.Quit();
     }
 }
