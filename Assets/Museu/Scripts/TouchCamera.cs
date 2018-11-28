@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchCamera : MonoBehaviour {
-
+    
     Vector3 touchStart;
 
     public float zoomOutMin;
