@@ -17,7 +17,29 @@ public class BookController : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
     
-    public void Slide()
+    public void Show() //Book Menu
+    {
+        if (anim.GetBool ("Hide") == true)
+        {
+            anim.SetBool("Hide", false);
+        }
+        if (anim.GetBool ("Show") == false)
+        {
+            anim.SetBool("Show", true);
+        }
+    }
+    public void Hide()
+    {
+        if (anim.GetBool ("Show") == true)
+        {
+            anim.SetBool("Show", false);
+        }
+        if (anim.GetBool("Hide") == false)
+        {
+            anim.SetBool("Hide", true);
+        }
+    }
+    public void Slide() //Book Hud game
     {
         if (anim.GetBool ("SlideUp") == false)
         {
@@ -32,5 +54,5 @@ public class BookController : MonoBehaviour {
             anim.SetBool("SlideDown", false);
         }
     }
-
+    
 }

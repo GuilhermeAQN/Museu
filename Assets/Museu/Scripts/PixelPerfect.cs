@@ -10,7 +10,7 @@ public class PixelPerfect : MonoBehaviour {
     {
         GetComponent<Camera>().orthographicSize = Screen.height / 2;
         position = transform.position;
-        transform.position = new Vector3(position.x - 0.1f, position.y - 0.1f, -10);
+        transform.position = new Vector3(position.x - 0f, position.y - 0, -10);
     }
     //private void LateUpdate()
     //{

@@ -10,6 +10,12 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void ShowOptions(){
+        BookController.instance.Show();
+    }
+    public void HideOptions(){
+        BookController.instance.Hide();
+    }
     public void QuitGame()
     {
         Application.Quit();

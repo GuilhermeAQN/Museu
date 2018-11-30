@@ -34,7 +34,8 @@ public class TouchCamera : MonoBehaviour {
         // }
         // Pinch to zoom
         if (Input.touchCount == 2)
-        {
+        { 
+            Pinch = true;
 			// get current touch positions
             Touch tZero = Input.GetTouch(0);
             Touch tOne = Input.GetTouch(1);
