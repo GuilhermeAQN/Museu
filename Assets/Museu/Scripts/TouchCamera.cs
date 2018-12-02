@@ -5,10 +5,10 @@ using System.Collections;
 
 public class TouchCamera : MonoBehaviour {
 
-    public float boundaryLeft;
-    public float boundaryRight;
-    public float boundaryUp;
-    public float boundaryDown;
+    public float boundaryLeft = -1630f;
+    public float boundaryRight = 1630f;
+    public float boundaryUp = 940f;
+    public float boundaryDown = -450f;
     private float camSizeH;
     private float camSizeV;
 
@@ -16,11 +16,16 @@ public class TouchCamera : MonoBehaviour {
 	public float ZoomMinBound = 180f;
 	public float ZoomMaxBound = 360f;
     Camera cam;
-    bool Pinch = false;
+
+    public float speed;
     
-    // Use this for initialization
     void Start()
-    {
+    {  
+        #if UNITY_ANDROID
+        Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        #endif
+        
         cam = GetComponent<Camera>();
         camSizeV = Camera.main.orthographicSize;
         camSizeH = Camera.main.orthographicSize * Screen.width / Screen.height;
@@ -28,15 +33,15 @@ public class TouchCamera : MonoBehaviour {
  
     void Update()
     {
-        // if (Input.touchCount == 1)
-        // {
-        //     touchStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // }
-        // Pinch to zoom
-        if (Input.touchCount == 2)
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)//Mover a camera
+        {
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            transform.Translate (-touchDeltaPosition.x * speed, -touchDeltaPosition.y * speed, 0);
+            
+        }
+        if (Input.touchCount == 2)//Fazer o Pinch Zoom
         { 
-            Pinch = true;
-			// get current touch positions
+            // get current touch positions
             Touch tZero = Input.GetTouch(0);
             Touch tOne = Input.GetTouch(1);
 			// get touch position from the previous frame
@@ -51,6 +56,7 @@ public class TouchCamera : MonoBehaviour {
 			Zoom (deltaDistance, TouchZoomSpeed);
         }
 
+        //Limite da camera das bordas da camera
         if (Camera.main.transform.position.x <= boundaryLeft + camSizeH)
         {
             transform.position = new Vector3(boundaryLeft + camSizeH, Camera.main.transform.position.y, -10);
@@ -68,8 +74,11 @@ public class TouchCamera : MonoBehaviour {
             transform.position = new Vector3(Camera.main.transform.position.x, boundaryUp - camSizeV, -10);
         }
     }
- 
-    void Zoom(float deltaMagnitudeDiff, float speed)
+
+    // IEnumerator TempoPinch(){
+	// 	yield return new WaitForSeconds(0.0150f);
+	// }
+    void Zoom(float deltaMagnitudeDiff, float speed)//Fazer o zoom
     {
         cam.orthographicSize += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
@@ -77,75 +86,4 @@ public class TouchCamera : MonoBehaviour {
         camSizeV = Camera.main.orthographicSize;
         camSizeH = Camera.main.orthographicSize * Screen.width / Screen.height;
     }
-
-    // Vector3 touchStart;
-
-    // public float zoomOutMin;
-    // public float zoomOutMax;
-    // public float boundaryLeft;
-    // public float boundaryRight;
-    // public float boundaryUp;
-    // public float boundaryDown;
-
-    // private float camSizeH;
-    // private float camSizeV;
-    // // Use this for initialization
-    // void Start()
-    // {
-    //     camSizeV = Camera.main.orthographicSize;
-    //     camSizeH = Camera.main.orthographicSize * Screen.width / Screen.height;
-    // }
-    
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0))
-    //         {
-    //             touchStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //         }
-    //     if (Input.touchCount == 2)
-    //     {
-    //         Touch touchZero = Input.GetTouch(0);
-    //         Touch touchOne = Input.GetTouch(1);
-
-    //         Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-    //         Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-    //         float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-    //         float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-    //         float difference = currentMagnitude - prevMagnitude;
-
-    //         Zoom(difference * 1f);
-    //     }else if (Input.GetMouseButton(0))
-    //     {   
-    //         Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //         Camera.main.transform.position += direction;
-    //     }
-
-    //     if (Camera.main.transform.position.x <= boundaryLeft + camSizeH)
-    //     {
-    //         transform.position = new Vector3(boundaryLeft + camSizeH, Camera.main.transform.position.y, -10);
-    //     }
-    //     if (Camera.main.transform.position.x >= boundaryRight - camSizeH)
-    //     {
-    //         transform.position = new Vector3(boundaryRight - camSizeH, Camera.main.transform.position.y, -10);
-    //     }
-    //     if (Camera.main.transform.position.y <= boundaryDown + camSizeV)
-    //     {
-    //         transform.position = new Vector3(Camera.main.transform.position.x, boundaryDown + camSizeV, -10);
-    //     }
-    //     if (Camera.main.transform.position.y >= boundaryUp - camSizeV)
-    //     {
-    //         transform.position = new Vector3(Camera.main.transform.position.x, boundaryUp - camSizeV, -10);
-    //     }
-    // }
-
-    // void Zoom(float increment)
-    // {
-    //     Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
-    //     camSizeV = Camera.main.orthographicSize;
-    //     camSizeH = Camera.main.orthographicSize * Screen.width / Screen.height; // Calcula o 'Size' horizontal
-    //     //o size da camera é igual a Metade da altura em unidades dela dentro do worldSpace
-    // }
 }
